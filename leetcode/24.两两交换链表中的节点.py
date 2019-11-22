@@ -35,6 +35,21 @@
 
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
+        if head==None or head.next==None:
+            return head
+        start = head
+        prev = ans = ListNode(-1)
+        prev.next = head
+        while start != None and start.next != None:
+            prev.next = start.next
+            temp = start.next.next
+            start.next.next = start
+            start.next = temp
+
+            prev = start
+            start = start.next
+        
+        return ans.next
         
 # @lc code=end
 
