@@ -37,7 +37,7 @@
 ## 它的左、右子树也分别为二叉排序树。
 class Solution:
     def numTrees(self, n: int) -> int:
-        ## dp
+        ## dp O(N^2)
         ## G(0)=1 G(1)=1
         ## G(n)为从1~n作为根节点得到的数量之和，左边为i个数时，右边为n-i-1个数，i的取值为0~n-1
         ## 所以G(n) = G(i)G(n-i-1)
