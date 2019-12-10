@@ -49,6 +49,36 @@
 
 class Solution:
     def isSymmetric(self, root: TreeNode) -> bool:
+        ## 递归
+        # def help(left, right):
+        #     if not left and not right:
+        #         return True
+        #     if not (left and right):
+        #         return False
+        #     if left.val != right.val:
+        #         return False
+        #     return help(left.left, right.right) and help(left.right, right.left)
         
+        # return help(root.left, root.right) if root else True
+
+        ## 迭代 调整入队列的方式
+        quene = []
+        quene +=[root, root]
+        while quene:
+            q1 = quene.pop()
+            q2 = quene.pop()
+            if not q1 and not q2:
+                continue
+            if not (q1 and q2):
+                return False
+            if q1.val != q2.val:
+                return False
+            quene.append(q1.left)
+            quene.append(q2.right)
+            quene.append(q1.right)
+            quene.append(q2.left)
+        return True
+
+
 # @lc code=end
 
