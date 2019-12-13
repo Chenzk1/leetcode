@@ -40,21 +40,31 @@
 # @lc code=start
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        quene = []
         if n==0:
             return len(tasks)
-        prev = ''
-        time = {}
+        curr_quene = [] ## 过去n时间内的操作
         ans = 0
-        for i in tasks:
-            quene.append(i)
-            while quene:
-                for i in quene:
-                    if i not in time:
-                        ans += 1
-                        time[i] = 0
-                    else:
-                        
+        while tasks:
+            for i in tasks:
+                if i not in curr_quene:
+                    ans += 1
+                    curr_quene.append(i)
+                    tasks.remove(i)
+                    if len(curr_quene) > n:
+                        curr_quene.pop(0)
+                    print(i, ans, curr_quene, tasks)
+                    
+            if not tasks:
+                break
+            while len(curr_quene) <= n:
+                if len(curr_quene)==n and 0 in curr_quene:
+                    break
+                curr_quene.append(0)
+                ans += 1
+                if len(curr_quene)==n+1:
+                    curr_quene.pop(0)
+                    break
 
+        return ans
 # @lc code=end
 
