@@ -20,15 +20,35 @@ class Solution:
         #             nums[j+1],nums[j] = nums[j],nums[j+1]
         # return nums
         '''
-        快排
+        快排1
         '''
-        if len(nums) <= 1:
-            return nums
-        pivot = nums[0]
-        left = [i for i in nums[1:] if i <= pivot]
-        right = [i for i in nums[1:] if i > pivot]
-        return self.sortArray(left) + [pivot] + self.sortArray(right)
-
+        # if len(nums) <= 1:
+        #     return nums
+        # pivot = nums[0]
+        # left = [i for i in nums[1:] if i <= pivot]
+        # right = [i for i in nums[1:] if i > pivot]
+        # return self.sortArray(left) + [pivot] + self.sortArray(right)
+        '''
+        快排2
+        '''
+        # def help(nums, left, right):
+        #     if left >= right:
+        #         return
+        #     low = left
+        #     high = right
+        #     pivot = nums[left]
+        #     while left < right:
+        #         while left < right and nums[right] > pivot:
+        #             right -= 1
+        #         nums[left] = nums[right]
+        #         while left < right and nums[left] <= pivot:
+        #             left += 1
+        #         nums[right] = nums[left]
+        #     nums[right] = pivot
+        #     help(nums, low, left-1)
+        #     help(nums, right+1, high)
+        # help(nums, 0, len(nums)-1)
+        # return nums
         '''
         插入
         打牌，需要逐个往后挪动
@@ -48,8 +68,30 @@ class Solution:
         shell
         对插入排序的优化
         '''
+        '''
+        归并
+        二分递归
+        '''
+        def merge(left, right):
+            result = []
+            i=j=0
+            while i < len(left) and j < len(right):
+                if left[i] <= right[j]:
+                    result.append(left[i])
+                    i += 1
+                else:
+                    result.append(right[j])
+                    j += 1
+            result += left[i:] + right[j:]
+            return result
 
-
+        n = len(nums)
+        while n<=1:
+            return nums
+        mid = n // 2
+        left = self.sortArray(nums[:mid])
+        right = self.sortArray(nums[mid:])
+        return merge(left, right)
 
 # @lc code=end
 
