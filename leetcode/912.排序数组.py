@@ -21,6 +21,7 @@ class Solution:
         # return nums
         '''
         快排
+        O(NlogN)
         '''
         if len(nums) <= 1:
             return nums
