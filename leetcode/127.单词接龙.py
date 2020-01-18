@@ -60,17 +60,30 @@
 # @lc code=start
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        print(beginWord, endWord)
+        from collections import defaultdict
         if endWord not in wordList:
             return 0
-        if beginWord==endWord:
-            return 0
-        for i in range(len(beginWord)):
-            if beginWord[i] != endWord[i]:
-                tmp = beginWord[:i]+endWord[i]+beginWord[i+1:]
-                if tmp in wordList:
-                    print(beginWord, beginWord[i], tmp)
-                    return self.ladderLength(tmp, endWord, wordList)+1
+        
+        wordDict = defaultdict(list)
+        for word in wordList:
+            for i in range(len(beginWord)):
+                wordDict[word[:i]+'*'+word[i+1:]].append(word)
+
+        quene = [(beginWord,1)]
+        visited = [beginWord]
+        while quene:
+            curWord, level = quene.pop(0)
+            for i in range(len(beginWord)):
+                tmp = curWord[:i] + "*" + curWord[i+1:]
+                for word in wordDict[tmp]:
+                    if word == endWord:
+                        return level+1
+                    if word not in visited:
+                        visited.append(word) # 每次都是同一层，因此之后继续遍历的时候就没必要再回到这一层的某个节点了，
+                        # 如果再回来只会更远，所以这里visited是可以的
+                        quene.append((word, level+1))
+                wordDict[tmp] = []
+
         return 0
         
 # @lc code=end
